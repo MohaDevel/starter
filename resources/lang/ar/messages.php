@@ -15,5 +15,10 @@ return [
 
      'hello gus'  => 'اهلا بك',
      'welcome'  => 'مرحبا',
+     'offer name required'  => 'الاسم مطلوب',
+     'offer price.required'  => 'السعر مطلوب',
+     'offer price.numeric'  => 'يجب ان يكون حق السعر رقم فقط',
+     'offer name.max'  => 'الاسم لا يزيد عن 10 حروف',
+     'offer details.required'  => 'هذه الحقل مطلوب',
 
 ];

@@ -15,5 +15,10 @@ return [
 
      'hello gus'  => 'اهلا بك',
      'welcome'  => 'مرحبا',
+     'offer name required'  => 'Offer Name is Required',
+     'offer price.required'  => 'Offer The Price  is Required',
+     'offer price.numeric'  => 'Offer The Price  is Numric just',
+     'offer name.max'  => 'Offer The Name is maxmumm is 10 chartesrs',
+     'offer details.required'  => 'Offer The Input is required',
 
 ];
