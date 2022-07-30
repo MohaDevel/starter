@@ -84,9 +84,14 @@
                 </div>
             </div>
         </nav>
+
+
         <div class="table-responsive">
             <div class="flex-center position-ref full-height">
+
                 <table class="table">
+                    <tr>
+                        <td colspan="7"><a href="{{ url('offers/create') }}" class="btn btn-info  float-right">{{__('messages.offer.Edit')}}</a></td></tr>
                     <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -111,7 +116,7 @@
                             <td><img src="images/offers/{{$offer -> photo}}" alt=""></td>
                             <td>
                                 <a href="#" class="btn btn-danger">{{__('messages.offer.Delete')}}</a>
-                                <a href="#" class="btn btn-info">{{__('messages.offer.Edit')}}</a>
+                                <a href="{{ url('offers/edit/'.$offer->id) }}" class="btn btn-info">{{__('messages.offer.Edit')}}</a>
                             </td>
                         </tr>
                     @endforeach

@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\OfferRequest;
 use App\Models\Offer;
+use App\Traits\OfferTraits;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 //use Mcamara\LaravelLocalization\LaravelLocalization;
 use LaravelLocalization;
 class CrudController extends Controller
 {
+    use OfferTraits;
+
     /**
      * Display a listing of the resource.
      *
@@ -39,13 +42,10 @@ class CrudController extends Controller
      */
     public function store(OfferRequest $request)
     {
-        //
-//        return  $request;
+        //return  $request;
         // validate data before insert to database
 
         // insert
-
-
 //        $messages=$this->getMessages();
 //        $rules=$this->getRules();
 //        $validator= Validator::make($request->all(),$rules,$messages);
@@ -54,14 +54,13 @@ class CrudController extends Controller
 ////             return  $validator->errors();
 ////            return  $validator->errors()->first();
 //        }
-
-
         // Save file photo in folder
-        $file_extension = $request->photo->getClientOriginalExtension();
-        $file_name = time().'.'.$file_extension;
-        $path = 'images/offers';
-        $request->photo->move($path,$file_name);
 
+        $file_name=$this->saveImage($request -> photo,'images/offers');
+//        $file_extension = $request->photo->getClientOriginalExtension();
+//        $file_name = time().'.'.$file_extension;
+//        $path = 'images/offers';
+//        $request->photo->move($path,$file_name);
         Offer::create([
             'photo' => $file_name,
             'name_ar' => $request->name_ar,
@@ -73,6 +72,21 @@ class CrudController extends Controller
         return  redirect()->back()->with(['success' => ' تم اضافه البيانا بنجاح ']);
     }
 
+    public function updateOffer(OfferRequest $request,$offer_id){
+        $offer = Offer::find($offer_id);
+        if(!$offer){
+            return redirect()->back();
+        }
+//        $offer->update($request -> all());
+        $offer->update([
+           'name_ar' => $request->name_ar,
+           'name_en' => $request->name_en,
+           'price' => $request->price,
+           'details_en' => $request->details_en,
+           'details_ar' => $request->details_ar,
+       ]);
+        return  redirect()->back()->with(['success'=>'تم التحديث بنحاح']);
+    }
     /**
      * Display the specified resource.
      *
@@ -163,4 +177,16 @@ public function getAllOffers(){
 
      return view('offers.all',compact('offers'));
 }
+
+public function editOffer($offers_id){
+   $offer=Offer::find($offers_id);
+  //      Offer::findOrFail($offers_id);
+    if(!$offer){
+        return redirect()->back();
+    }
+    $offer = Offer::select('id','price','name_ar','name_en','details_en','details_ar')->find($offers_id);
+    return  view('offers.edit',compact('offer'));
+}
+
+
 }
