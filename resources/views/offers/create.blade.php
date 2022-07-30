@@ -91,34 +91,60 @@
         {{ Session::get('success') }}
      </div>
      @endif
-     <form class="row g-3 needs-validation"  method="POST" action="{{  route('offers.store') }}">
+     <form class="row g-3 needs-validation"  method="POST" action="{{  route('offers.store') }}" enctype="multipart/form-data">
          @csrf
 {{--         <input name="_token" value="{{ csrf_token() }}">--}}
+
          <div class="col-md-4">
-             <label for="validationCustom01" class="form-label">Name</label>
-             <input type="text" class="form-control" name="name" id="validationCustom01"   >
-             @error('name')
+             <label for="validationCustom01" class="form-label">Photo</label>
+             <input type="file" class="form-control" name="photo" id="validationCustom01"   >
+             @error('photo')
+             <small class="form-text text-danger">{{ $message }}</small>
+             @enderror
+         </div>
+
+
+         <div class="col-md-4">
+                 <label for="validationCustom01" class="form-label">{{__('messages.offer.key ar')}}</label>
+             <input type="text" class="form-control" name="name_ar" id="validationCustom01"   >
+             @error('name_ar')
             <small class="form-text text-danger">{{ $message }}</small>
              @enderror
          </div>
          <div class="col-md-4">
-             <label for="validationCustom02" class="form-label">Price</label>
+                 <label for="validationCustom01" class="form-label">{{__('messages.offer.key en')}}</label>
+             <input type="text" class="form-control" name="name_en" id="validationCustom01"   >
+             @error('name_en')
+            <small class="form-text text-danger">{{ $message }}</small>
+             @enderror
+         </div>
+         <div class="col-md-4">
+             <label for="validationCustom02" class="form-label">{{__('messages.offer.Price')}}</label>
              <input type="text" class="form-control" name="price" id="validationCustom02"   >
              @error('price')
              <small class="form-text text-danger">{{ $message }}</small>
              @enderror
          </div>
          <div class="col-md-4">
-             <label for="validationCustomUsername" class="form-label">Details</label>
+             <label for="validationCustomUsername" class="form-label">{{__('messages.offer.Details ar')}}</label>
              <div class="input-group has-validation">
-              <input type="text" class="form-control" name="details" id="validationCustomUsername" aria-describedby="inputGroupPrepend"  >
-             @error('details')
+              <input type="text" class="form-control" name="details_ar" id="validationCustomUsername" aria-describedby="inputGroupPrepend"  >
+             @error('details_ar')
+                 <small class="form-text text-danger">{{ $message }}</small>
+            @enderror
+             </div>
+         </div>
+         <div class="col-md-4">
+             <label for="validationCustomUsername" class="form-label">{{__('messages.offer.Details en')}}</label>
+             <div class="input-group has-validation">
+              <input type="text" class="form-control" name="details_en" id="validationCustomUsername" aria-describedby="inputGroupPrepend"  >
+             @error('details_en')
                  <small class="form-text text-danger">{{ $message }}</small>
             @enderror
              </div>
          </div>
          <div class="col-12">
-             <button class="btn btn-primary" type="submit">Submit form</button>
+             <button class="btn btn-primary" type="submit">{{__('messages.offer.Submit form')}}</button>
          </div>
      </form>
  </div>

@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\OfferRequest;
 use App\Models\Offer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-
+//use Mcamara\LaravelLocalization\LaravelLocalization;
+use LaravelLocalization;
 class CrudController extends Controller
 {
     /**
@@ -35,30 +37,38 @@ class CrudController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(OfferRequest $request)
     {
         //
 //        return  $request;
         // validate data before insert to database
 
         // insert
-        $rules=[
-            'name' => 'required|max:10|unique:offers,name',
-            'price' => 'required|numeric',
-            'details' => 'required',
-        ];
 
-        $messages=$this->getMessages();
-        $validator= Validator::make($request->all(),$rules,$messages);
-        if($validator -> fails()){
-            return  redirect()->back()->withErrors($validator)->withInput($request->all());
-//             return  $validator->errors();
-//            return  $validator->errors()->first();
-        }
+
+//        $messages=$this->getMessages();
+//        $rules=$this->getRules();
+//        $validator= Validator::make($request->all(),$rules,$messages);
+//        if($validator -> fails()){
+//            return  redirect()->back()->withErrors($validator)->withInput($request->all());
+////             return  $validator->errors();
+////            return  $validator->errors()->first();
+//        }
+
+
+        // Save file photo in folder
+        $file_extension = $request->photo->getClientOriginalExtension();
+        $file_name = time().'.'.$file_extension;
+        $path = 'images/offers';
+        $request->photo->move($path,$file_name);
+
         Offer::create([
-            'name' => $request->name,
+            'photo' => $file_name,
+            'name_ar' => $request->name_ar,
+            'name_en' => $request->name_en,
             'price' => $request->price,
-            'details' => $request->details
+            'details_en' => $request->details_en,
+            'details_ar' => $request->details_ar,
         ]);
         return  redirect()->back()->with(['success' => ' تم اضافه البيانا بنجاح ']);
     }
@@ -109,7 +119,7 @@ class CrudController extends Controller
     }
 
     public function getOffers(){
-        return Offer::select('id','name','price','details')->get();
+        return Offer::select('id','name_ar','name_en','price','details_ar','details_en')->get();
     }
 
 //    public function stores(){
@@ -121,12 +131,36 @@ class CrudController extends Controller
 //        return 'OK';
 //    }
 
-        public function getMessages(){
-        return $messages=[ 'name.required' => __('messages.offer name required'),
-            'price.required' =>  __('messages.offer price.required'),
-            'price.numeric' => __('messages.offer price.numeric'),
-            'details.required' =>  __('messages.offer details.required'),
-            'name.max' =>  __('messages.offer name.max'),
-            'name.unique' => 'يحب ان يكون الاسم فريد من نوعه'];
+//        public function getMessages(){
+//        return $messages=[ 'name.required' => __('messages.offer name required'),
+//            'price.required' =>  __('messages.offer price.required'),
+//            'price.numeric' => __('messages.offer price.numeric'),
+//            'details.required' =>  __('messages.offer details.required'),
+//            'name.max' =>  __('messages.offer name.max'),
+//            'name.unique' => 'يحب ان يكون الاسم فريد من نوعه'];
+//}
+
+
+//        public function getRules(){
+//            return $rules=[
+//                'name' => 'required|max:10|unique:offers,name',
+//                'price' => 'required|numeric',
+//                'details' => 'required',
+//            ];
+//        }
+
+
+public function getAllOffers(){
+     $offers=Offer::select (
+         'id',
+         'name_' . LaravelLocalization::getCurrentLocale() . ' as name',
+         'price',
+         'details_' . LaravelLocalization::getCurrentLocale() . ' as details',
+         'created_at',
+         'updated_at',
+         'photo'
+     )->get();
+
+     return view('offers.all',compact('offers'));
 }
 }
