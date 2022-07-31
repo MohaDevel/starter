@@ -113,4 +113,5 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::post('update/{offer_id}','CrudController@updateOffer')->name('offers.update');
         Route::get('all','CrudController@getAllOffers');
     });
+    Route::get('youtube','CrudController@getVideo');
 });

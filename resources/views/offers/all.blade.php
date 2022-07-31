@@ -91,7 +91,7 @@
 
                 <table class="table">
                     <tr>
-                        <td colspan="7"><a href="{{ url('offers/create') }}" class="btn btn-info  float-right">{{__('messages.offer.Edit')}}</a></td></tr>
+                        <td colspan="7"><a href="{{ url('offers/create') }}" class="btn btn-info  float-right">Add</a></td></tr>
                     <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -130,3 +130,4 @@
 
     </body>
 </html>
+

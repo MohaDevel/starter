@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\VideoViewer;
+use App\Events\videoViwere;
 use App\Http\Requests\OfferRequest;
 use App\Models\Offer;
+use App\Models\vedio;
 use App\Traits\OfferTraits;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -188,5 +191,11 @@ public function editOffer($offers_id){
     return  view('offers.edit',compact('offer'));
 }
 
+
+public function getVideo(){
+        $Vedios = vedio::first();
+        event(new videoViwere($Vedios));
+        return view('vodie')->with('video',$Vedios);
+}
 
 }
