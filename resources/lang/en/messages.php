@@ -38,4 +38,6 @@ return [
     'offer.controls' => 'Control',
     'offer.Delete'  => 'Delete',
     'offer.Edit'  => 'Edit',
+    'offers.errors'  => 'This is not found',
+    'offers.deleted' => 'Deleted SuccessFully'
 ];

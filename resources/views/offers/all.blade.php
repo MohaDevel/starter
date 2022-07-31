@@ -88,7 +88,18 @@
 
         <div class="table-responsive">
             <div class="flex-center position-ref full-height">
+                @if(Session::has('success'))
 
+                    <div class="div alert alert-success">
+                        {{Session::get('success')}}
+                    </div>
+                @endif
+
+                    @if(Session::has('error'))
+                        <div class="div alert alert-danger">
+                            {{Session::get('error')}}
+                            </div>
+                    @endif
                 <table class="table">
                     <tr>
                         <td colspan="7"><a href="{{ url('offers/create') }}" class="btn btn-info  float-right">Add</a></td></tr>
@@ -115,7 +126,7 @@
                             <td>{{$offer -> details}}</td>
                             <td><img src="images/offers/{{$offer -> photo}}" alt=""></td>
                             <td>
-                                <a href="#" class="btn btn-danger">{{__('messages.offer.Delete')}}</a>
+                                <a href="{{route('offers.delete',$offer->id)}}" class="btn btn-danger">{{__('messages.offer.Delete')}}</a>
                                 <a href="{{ url('offers/edit/'.$offer->id) }}" class="btn btn-info">{{__('messages.offer.Edit')}}</a>
                             </td>
                         </tr>

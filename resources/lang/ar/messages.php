@@ -35,6 +35,7 @@ return [
     'offer.Delete'  => 'حذف',
     'offer.Edit'  => 'تعديل',
     'offer name_ar.key'  => 'الاسم',
-
+    'offers.errors'  => 'عفوا خطا هذه غير موجود',
+    'offers.deleted' => 'تم الحذف بنجاح استمر'
 
 ];

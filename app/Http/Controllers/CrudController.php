@@ -198,4 +198,18 @@ public function getVideo(){
         return view('vodie')->with('video',$Vedios);
 }
 
+public  function delete($offer_id){
+        // Check if offer id exists
+        $offer = Offer::find($offer_id);
+
+        if(!$offer){
+            return redirect()->back()->with(['error'=> __('messages.offers.errors')]);
+        }
+//        $offer = Offer::where('id',$offer_id)->first();
+
+        $offer->delete();
+
+        return redirect()->route('offers.all')->with(['success'=>__('messages.offers.deleted')]);
+}
+
 }
