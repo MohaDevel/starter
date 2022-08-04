@@ -114,5 +114,84 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::get('delete/{offer_id}','CrudController@delete')->name('offers.delete');
         Route::get('all','CrudController@getAllOffers')->name('offers.all');
     });
-    Route::get('youtube','CrudController@getVideo');
+    Route::get('youtube','CrudController@getVideo')->middleware('auth');
+
+
+
 });
+
+
+########################### Begin Ajax routes  #######################
+
+Route::group(['prefix'=>'ajax-offers'],function (){
+
+    Route::get('create','OfferController@create');
+
+    Route::post('store','OfferController@store')->name('ajax.offersStore');
+
+    Route::post('delete','OfferController@delete')->name('ajax.offersdelete');
+
+    Route::get('all','OfferController@all')->name('ajaxoffers.all');
+
+
+
+    Route::get('edit/{offer_id}','OfferController@edit')->name('ajax.offersedit');
+
+    Route::post('update','OfferController@update')->name('ajaxoffers.update');
+});
+
+
+
+
+
+########################### End Begin Ajax routes  #######################
+
+
+
+
+###########################  Begin Authentication && Guards #######################
+
+
+
+
+
+
+Route::group(['middleware' =>'ChecAge','namespace'=>'Auth'],function (){
+    Route::get('adult3','CustomeAuthController@Adulat')->name('adult3');
+});
+
+Route::get("/dashboard",function (){
+   return 'Not Adoult';
+})->name("not.adout");
+
+Route::get('si00te','Auth\CustomeAuthController@site')->name('si00te');
+Route::get('admin','Auth\CustomeAuthController@admin')->name('admin')->middleware('auth:web');
+Route::get('admin/login','Auth\CustomeAuthController@adminLogin')->name('admin.login');
+Route::post('admin/login','Auth\CustomeAuthController@checkAdminLogin')->name('save.admin.login');
+Route::get('site','Auth\CustomeAuthController@site')->name('site')->middleware('auth:admin');;
+Route::get('front','Auth\CustomeAuthController@front')->name('front');
+
+
+
+
+########################### End  Begin Authentication && Guards   #######################
+###########################   Begin Relations    #######################
+Route::get('has-one','relations\RelationsController@hasOneRelation');
+
+
+Route::get('has-one-relation','relations\RelationsController@hasOneRelationRevers');
+
+
+
+Route::get('get-has-phone','relations\RelationsController@gethasphones');
+
+
+
+Route::get('get-not-has-phone','relations\RelationsController@getnothasphones');
+
+
+
+Route::get('get-use-has-phone-with-condition','relations\RelationsController@getUserWhereHasPhonoWithCondition');
+###########################   End Relations    #######################
+
+

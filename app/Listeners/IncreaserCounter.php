@@ -28,12 +28,21 @@ class IncreaserCounter
     public function handle(videoViwere $event)
     {
         //
-        $this->updateViewer($event->vedio);
-    }
 
+        if(!session() ->has('videoIsVisited')){
+
+            $this->updateViewer($event->vedio);
+        }
+        else{
+            return false;
+        }
+
+    }
 
     public function updateViewer($video){
         $video->viewer=$video->viewer+1;
-        $video->save();
+       $video->save();
+
+        session()->put('videoIsVisited',$video->id);
     }
 }
